@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>服務條款｜日常系超能保衛隊</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:    #007AFF;
+    --green:   #22C55E;
+    --orange:  #F59E0B;
+    --red:     #EF4444;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --text-disabled: #D1D5DB;
+    --bg: #F6F6F5;
+    --white: #FFFFFF;
+    --border: #EDEDED;
+    --border-inner: #F2F2F2;
+    --shadow-offset: 4px;
+    --shadow-color: #111827;
+    --radius-card: 16px;
+    --radius-btn: 10px;
+    --overlay: rgba(20,20,19,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top Nav ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .nav-badge {
+    width: 32px;
+    height: 32px;
+    background: var(--blue);
+    border-radius: 8px;
+    border: 2px solid var(--shadow-color);
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .nav-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.3px;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .nav-tab {
+    padding: 6px 14px;
+    border-radius: var(--radius-btn);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    border: none;
+    background: transparent;
+  }
+  .nav-tab:hover { background: var(--overlay); color: var(--text-primary); }
+  .nav-tab.active {
+    background: var(--text-primary);
+    color: var(--white);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 64px 24px 48px;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .hero-chars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .char-chip {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.12s, box-shadow 0.12s;
+    cursor: default;
+  }
+  .char-chip:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--shadow-color);
+  }
+
+  /* ── Updated tag ── */
+  .updated-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 5px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+  }
+  .updated-dot {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+  }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── Section panels ── */
+  .section {
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.4s ease forwards;
+  }
+  .section:nth-child(1)  { animation-delay: 0.05s; }
+  .section:nth-child(2)  { animation-delay: 0.10s; }
+  .section:nth-child(3)  { animation-delay: 0.15s; }
+  .section:nth-child(4)  { animation-delay: 0.20s; }
+  .section:nth-child(5)  { animation-delay: 0.25s; }
+  .section:nth-child(6)  { animation-delay: 0.30s; }
+  .section:nth-child(7)  { animation-delay: 0.35s; }
+  .section:nth-child(8)  { animation-delay: 0.40s; }
+  .section:nth-child(9)  { animation-delay: 0.45s; }
+  .section:nth-child(10) { animation-delay: 0.50s; }
+  .section:nth-child(11) { animation-delay: 0.55s; }
+  .section:nth-child(12) { animation-delay: 0.60s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  .section-header:hover .section-title { color: var(--blue); }
+
+  .section-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    border: 1.5px solid var(--shadow-color);
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    flex: 1;
+    transition: color 0.15s;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-disabled);
+    font-weight: 500;
+  }
+  .chevron {
+    width: 20px; height: 20px;
+    color: var(--text-disabled);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .section.open .chevron { transform: rotate(180deg); }
+
+  .section-body {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+  }
+  .section.open .section-body { max-height: 2000px; }
+
+  .section-content {
+    padding: 20px 20px 24px;
+    border-top: 1px solid var(--border-inner);
+  }
+
+  .section-content p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .section-content p:last-child { margin-bottom: 0; }
+
+  .section-content ul, .section-content ol {
+    padding-left: 0;
+    list-style: none;
+    margin: 12px 0;
+  }
+  .section-content li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 6px;
+  }
+  .section-content li::before {
+    content: '·';
+    position: absolute;
+    left: 6px;
+    font-size: 16px;
+    color: var(--blue);
+    line-height: 1.5;
+  }
+
+  .section-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* ── Highlight boxes ── */
+  .highlight-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .highlight-box.blue  { border-left: 3px solid var(--blue); }
+  .highlight-box.green { border-left: 3px solid var(--green); }
+  .highlight-box.orange { border-left: 3px solid var(--orange); }
+  .highlight-box.red  { border-left: 3px solid var(--red); }
+
+  /* ── Data table ── */
+  .data-table {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin: 14px 0;
+    font-size: 13px;
+  }
+  .data-table tr { border-bottom: 1px solid var(--border-inner); }
+  .data-table tr:last-child { border-bottom: none; }
+  .data-table th {
+    background: var(--bg);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-primary);
+    letter-spacing: 0.3px;
+  }
+  .data-table td {
+    padding: 10px 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .data-table td:first-child {
+    font-weight: 500;
+    color: var(--text-primary);
+    width: 35%;
+  }
+
+  /* ── Contact card ── */
+  .contact-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: 4px 4px 0 var(--shadow-color);
+    padding: 24px 24px 28px;
+    margin-top: 40px;
+    text-align: center;
+  }
+  .contact-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .contact-card p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue);
+    color: var(--white);
+    padding: 11px 24px;
+    border-radius: var(--radius-btn);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid var(--shadow-color);
+    box-shadow: 3px 3px 0 var(--shadow-color);
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .contact-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--shadow-color);
+  }
+  .contact-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--shadow-color);
+  }
+
+  /* ── Page divider ── */
+  .page-divider {
+    max-width: 760px;
+    margin: 48px auto 40px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .page-divider::before, .page-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .page-divider span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-disabled);
+    white-space: nowrap;
+  }
+
+  /* ── Tab sections ── */
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  footer p {
+    font-size: 12px;
+    color: var(--text-disabled);
+    line-height: 1.8;
+  }
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  footer a:hover { color: var(--blue); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .nav-tabs .nav-tab { padding: 6px 10px; font-size: 12px; }
+    .hero { padding: 40px 16px 32px; }
+    .container { padding: 0 16px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <div class="nav-badge">🛡️</div>
+    <span class="nav-title">日常系超能保衛隊</span>
+  </a>
+  <div class="nav-tabs">
+    <a class="nav-tab active" href="#">服務條款</a>
+    <a class="nav-tab" href="privacy.html">隱私權政策</a>
+  </div>
+</nav>
+
+
+
+  <div class="hero">
+    <span class="hero-eyebrow">Legal · 法律文件</span>
+    <h1>服務條款</h1>
+    <p class="hero-sub">使用「日常系超能保衛隊」前，請詳閱以下條款。繼續使用本 App 即代表您同意本條款的所有內容。</p>
+
+  </div>
+
+  <div class="container">
+    <div style="text-align:center; margin-bottom:32px;">
+      <div class="updated-tag">
+        <div class="updated-dot"></div>
+        最後更新：2026 年 6 月 8 日
+      </div>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section open" id="t1">
+      <div class="section-header" onclick="toggleSection('t1')">
+        <div class="section-icon" style="background:#EFF6FF;">📋</div>
+        <span class="section-title">接受條款</span>
+        <span class="section-num">01</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>歡迎使用「日常系超能保衛隊」（以下簡稱「本 App」）。本 App 由開發者（以下簡稱「我們」）提供，供您個人非商業使用。</p>
+          <p>當您下載、安裝或使用本 App，即表示您已閱讀、理解並同意受本服務條款約束。若您不同意本條款，請勿使用本 App。</p>
+          <div class="highlight-box blue">
+            <strong>本條款適用對象：</strong>所有下載、安裝或使用「日常系超能保衛隊」的使用者，不論使用平台（iOS 或 Android）。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="section" id="t2">
+      <div class="section-header" onclick="toggleSection('t2')">
+        <div class="section-icon" style="background:#F0FDF4;">✨</div>
+        <span class="section-title">服務說明</span>
+        <span class="section-num">02</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>「日常系超能保衛隊」是一款結合生活工具與角色互動的手機應用程式，提供以下功能：</p>
+          <ul>
+            <li><strong>日記（詩織）</strong>：心情記錄、照片附加、時光信功能</li>
+            <li><strong>記帳（真理奈）</strong>：收支記錄、每日與每月統計</li>
+            <li><strong>專注計時器（艾莉絲）</strong>：番茄鐘工作法、連續使用天數追蹤</li>
+            <li><strong>每日排程（凜）</strong>：當日行程、待辦清單、月曆模式</li>
+            <li><strong>食物推薦（凱瑟琳）</strong>：餐廳管理、隨機推薦、美食轉盤</li>
+            <li><strong>衣櫃穿搭（菲菲）</strong>：衣物管理、AI 穿搭建議、照片辨識</li>
+            <li><strong>每日小語（莉莉）</strong>：AI 生成每日語錄、星座運勢</li>
+          </ul>
+          <p>本 App 部分功能（穿搭建議、衣物照片辨識、每日小語）透過 Anthropic Claude AI 技術提供服務。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="section" id="t3">
+      <div class="section-header" onclick="toggleSection('t3')">
+        <div class="section-icon" style="background:#FFF7ED;">🔑</div>
+        <span class="section-title">使用者帳號與資料</span>
+        <span class="section-num">03</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>本 App 目前採用<strong>本機儲存模式</strong>，所有使用者資料（日記、帳目、排程、衣物等）均儲存在您的裝置本機，不需要帳號即可使用。</p>
+          <div class="highlight-box orange">
+            <strong>⚠️ 重要提醒：</strong>由於資料儲存於本機 SQLite 資料庫，若您解除安裝本 App、更換裝置或進行裝置重置，所有資料將永久遺失且無法復原。建議您定期以截圖或其他方式備份重要內容。
+          </div>
+          <p>您對自己在本 App 中輸入的所有內容（文字、照片、記錄等）擁有完整所有權，我們不會主張任何相關權利。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="section" id="t4">
+      <div class="section-header" onclick="toggleSection('t4')">
+        <div class="section-icon" style="background:#FFF1F2;">⚙️</div>
+        <span class="section-title">AI 功能使用條款</span>
+        <span class="section-num">04</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>本 App 整合 Anthropic Claude AI 提供部分功能，使用時請注意以下事項：</p>
+          <ul>
+            <li>AI 生成的穿搭建議、每日小語及星座運勢僅供參考，不構成任何專業建議</li>
+            <li>衣物照片辨識功能需將圖片上傳至後端代理伺服器進行分析處理</li>
+            <li>AI 功能的可用性依賴於網路連線及 Anthropic API 服務狀態</li>
+            <li>我們不保證 AI 生成內容的準確性、完整性或適用性</li>
+          </ul>
+          <div class="highlight-box blue">
+            <strong>API 安全設計：</strong>您的衣物照片與穿搭請求透過我們部署的後端代理（Vercel Serverless）轉發，API 金鑰僅存於伺服器端，不會暴露於客戶端或您的裝置。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="section" id="t5">
+      <div class="section-header" onclick="toggleSection('t5')">
+        <div class="section-icon" style="background:#F0FDF4;">✅</div>
+        <span class="section-title">使用規範</span>
+        <span class="section-num">05</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>使用本 App 時，您同意：</p>
+          <ul>
+            <li>僅將本 App 用於個人、非商業目的</li>
+            <li>不得嘗試對本 App 進行反向工程、反組譯或修改</li>
+            <li>不得以任何方式規避本 App 的技術保護措施</li>
+            <li>不得利用本 App 從事任何違法或損害他人的行為</li>
+            <li>對上傳至 AI 功能的圖片內容負完全責任</li>
+          </ul>
+          <p>我們保留因您違反本條款而終止或暫停您使用本 App 的權利。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="section" id="t6">
+      <div class="section-header" onclick="toggleSection('t6')">
+        <div class="section-icon" style="background:#EFF6FF;">🎨</div>
+        <span class="section-title">智慧財產權</span>
+        <span class="section-num">06</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>本 App 的所有內容，包括但不限於：</p>
+          <ul>
+            <li>七位角色的設計、立繪、表情圖及背景故事</li>
+            <li>應用程式介面設計、視覺風格及商標</li>
+            <li>程式碼、架構及資料庫設計</li>
+            <li>音效、音樂及對話文本</li>
+          </ul>
+          <p>均為開發者的專有財產，受著作權法及其他智慧財產權法律保護。未經明確書面授權，您不得複製、散布、修改或以任何方式利用上述內容。</p>
+          <div class="highlight-box green">
+            您在本 App 中創建的個人內容（日記、記帳記錄等）之著作權歸屬於您，我們不會主張任何相關權利。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 7 -->
+    <div class="section" id="t7">
+      <div class="section-header" onclick="toggleSection('t7')">
+        <div class="section-icon" style="background:#FFF7ED;">⚖️</div>
+        <span class="section-title">免責聲明與責任限制</span>
+        <span class="section-num">07</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>本 App 係以「現狀」提供，我們不就下列事項做出任何明示或默示保證：</p>
+          <ul>
+            <li>本 App 不會中斷或完全無誤</li>
+            <li>本 App 可滿足您的特定需求</li>
+            <li>AI 生成內容的準確性或適切性</li>
+            <li>資料的永久保存（本機儲存可能因裝置因素遺失）</li>
+          </ul>
+          <div class="highlight-box red">
+            <strong>責任上限：</strong>在法律允許的最大範圍內，我們對您因使用或無法使用本 App 所產生的任何直接、間接、偶發或後果性損失，不承擔任何責任，包括資料遺失。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 8 -->
+    <div class="section" id="t8">
+      <div class="section-header" onclick="toggleSection('t8')">
+        <div class="section-icon" style="background:#F5F3FF;">🔄</div>
+        <span class="section-title">條款修訂</span>
+        <span class="section-num">08</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="section-body">
+        <div class="section-content">
+          <p>我們保留隨時修訂本服務條款的權利。條款更新後，我們將在本頁面公告更新日期，並在可行時透過 App 內通知您。</p>
+          <p>修訂後繼續使用本 App，視為您接受更新後的條款。若您不同意修訂內容，請停止使用本 App 並將其從您的裝置移除。</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+
+<footer>
+  <p>
+    © 2026 日常系超能保衛隊 &nbsp;·&nbsp;
+    <a href="terms.html">服務條款</a> &nbsp;·&nbsp;
+    <a href="privacy.html">隱私權政策</a>
+  </p>
+  <p style="margin-top:6px;">本 App 由獨立開發者製作 &nbsp;·&nbsp; Powered by Anthropic Claude</p>
+</footer>
+
+<script>
+  function toggleSection(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
